@@ -57,7 +57,7 @@ public class Cellule_Graphique extends JButton {
     
     
     
-    
+    //Constructeur
    
     Cellule_Graphique (Pions coordAssoc) {
         CelluleAssociee = coordAssoc;
@@ -68,63 +68,67 @@ public class Cellule_Graphique extends JButton {
     public void paintComponent (Graphics G) {
         super.paintComponent(G);
         
+        //Si la case possède un roi 
+        
         if (CelluleAssociee.etreRoi() == true) {
             
-        
+        //Dépendant de la couleur du roi
             switch (CelluleAssociee.ReferenceCouleurPion()) {
                     
-                    case 1:
+                    case 1: //S'il est rouge
+                        
                         
                         if (( CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 4) || (CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 0)) {
-                           setIcon(img_rrt); 
+                           setIcon(img_rrt);  //S'il est sur un temple
                            break;
                         } else {
-                            setIcon(img_rr); 
+                            setIcon(img_rr); //Sinon
                             break;
                         }
                        
                         
                         
-                    case -1 :
+                    case -1 : //S'il est bleu
                         if (( CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 4) || (CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 0)) {
-                           setIcon(img_rbt); 
+                           setIcon(img_rbt); //S'il est sur un temple
                            break;
                         } else {
-                            setIcon(img_rb); 
+                            setIcon(img_rb); //Sinon
                             break;
                         }
                         
             }
+            //Si c'est un simple pion rouge
         } else if (CelluleAssociee.ReferenceCouleurPion() == 1 && CelluleAssociee.etreRoi() == false) {
                 
             if ((CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 4) || (CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 0)) {
                 
-                        setIcon(img_prt);
+                        setIcon(img_prt); //Sur un temple
                        
-            } else {
+            } else { 
                         
-                        setIcon(img_pr);
+                        setIcon(img_pr); //Sinon
                         
                 }
         
-    } else if (CelluleAssociee.ReferenceCouleurPion() == -1 && CelluleAssociee.etreRoi() == false) {
+    } else if (CelluleAssociee.ReferenceCouleurPion() == -1 && CelluleAssociee.etreRoi() == false) { //Si c'est un simple pion bleu
                 
             if ((CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 4) || (CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 0)) {
                 
-                        setIcon(img_pbt);
+                        setIcon(img_pbt); //Sur un temple
                        
             } else {
                         
-                        setIcon(img_pb);
+                        setIcon(img_pb); //Sinon
                         
                 }
     
     
     } else if ((CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 4) || (CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 0)) {
-        
+        //Si ce n'est qu'un temple vide
         setIcon(img_temple);
 
-    } else {
+    } else { //Si ce n'est qu'une case vide
         
         setIcon(img_vide);
     }

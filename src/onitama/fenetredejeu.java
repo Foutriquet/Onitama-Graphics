@@ -62,7 +62,7 @@ public class fenetredejeu extends javax.swing.JFrame {
 		joueur2.InitialiserGrille(grille);
                 
          
-        AfficherPlateau();
+        AfficherPlateau(); //On commence par afficher la grille de base
         
         
         
@@ -70,11 +70,11 @@ public class fenetredejeu extends javax.swing.JFrame {
     
 //Affichage du plateau 
         
-        public void AfficherPlateau() {
+        public void AfficherPlateau() { //Méthode d'affichade de la grille
             
         
-        for (int i = 4; i>=0; i--) {
-            for (int j = 0; j<5; j++) {
+        for (int i = 4; i>=0; i--) { 
+            for (int j = 0; j<5; j++) { //On parcours le plateau
                 
                 
                 Cellule_Graphique CellGraph = new Cellule_Graphique(grille.ReferencePions()[i][j]);
@@ -89,20 +89,21 @@ public class fenetredejeu extends javax.swing.JFrame {
         //Pour un bouton -----------------------------------------------------------------------------------
         
         
-        public boolean VerifierDeVers(int ligne, int colonne) {
+        public boolean VerifierDeVers(int ligne, int colonne) { //On cherche à savoir si le joueur choisit son pion à déplacer où la case sur laquelle il veut déplacer son pion
+            
             
             Joueur jc = grille.JoueurCourant();
-            int couleurjoueur = jc.ReferenceCouleurDuJoueur();
+            int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
             
-            if (grille.ReferencePions(ligne,colonne).ReferenceCouleurPion() == couleurjoueur) {
+            if (grille.ReferencePions(ligne,colonne).ReferenceCouleurPion() == couleurjoueur) { //S'il clique sur son pion,
                 
-                bouton1.initialiserLigne(ligne);
+                bouton1.initialiserLigne(ligne); //On récupère la référence de coordonnée de cette case
                 bouton1.initialiserColonne(colonne);
                 
                 return true;
                 
                 
-            } else {
+            } else { //Sinon, rien ne se passe
                 
                 
                 return false;
@@ -111,7 +112,7 @@ public class fenetredejeu extends javax.swing.JFrame {
             
         }
           
-            public boolean Jouer(int ligne, int colonne) {
+            public boolean Jouer(int ligne, int colonne) { //On joue un tour
             
                 
             //Vérifier que le joueur n'a pas perdu tous ses pions ------------
@@ -162,7 +163,10 @@ public class fenetredejeu extends javax.swing.JFrame {
            }
                 
             //Sinon, on passe au tour suivant, et on actualise le plateau
-                
+            
+            
+            //A compléter, changement de carte du milieu avec celle du joueur
+            
             grille.JoueurSuivant();
             AfficherPlateau();
             
@@ -267,6 +271,9 @@ public class fenetredejeu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bouton_demarrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_demarrerActionPerformed
+        
+        //Affichage d'ambiance
+        
         carte1_jb.setVisible(true);
         carte2_jb.setVisible(true);
         carte1_jr.setVisible(true);
