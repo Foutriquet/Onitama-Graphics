@@ -42,41 +42,7 @@ public class Carte {
 	public static Carte cobra;
         
         
-        
-        //METHODE 1 ------------------------------------------------------------------------------------------------------
-        
-        
-    public String prendreNomCarte() {
-		return nom;
-	}
-
-        
-        //METHODE 2 ------------------------------------------------------------------------------------------------------
-        
-        
-//Informations récupérée sur internet. Elles représentent les déplacements possible depuis la position du joueur. 
-	public static void init() { //Les grille.couleur permettent l'attribution de la carte à une orientation de grille d'un joueur
-            
-		tigre = new Carte(new int[][] {{0,2},{0,-1}},"tigre", Grille.bleu); //Exemple, ici, le tigre peut aller deux cases en avant, et une case en arrière (0,2) et (0,-1)
-		dragon = new Carte(new int[][] {{-2,1}, {-1,-1}, {1,-1},{2,1}} ,"Dragon", Grille.rouge); //Ici, il peut aller deux cases en diagonale vers la gauche (-2,1)
-		grenouille = new Carte(new int[][] {{-2,0}, {-1,1},  {1,-1}},"grenouille", Grille.rouge);
-		lapin = new Carte(new int[][] {{1,1},{-1,-1}, {2,0}},"lapin", Grille.bleu);
-		crabe = new Carte(new int[][] {{2,0},{-2,0},  {0,1}} ,"crabe", Grille.bleu);
-		elephant = new Carte(new int[][] {{1,0},{-1,0},{1,1},{-1,1}},"Elephant", Grille.rouge);
-		oie = new Carte(new int[][] {{-1,1}, {1,-1},{-1,0},{1,0}},"oie", Grille.bleu);
-		coq = new Carte(new int[][] {{-1,-1},{1,1},{-1,0},{1,0}},"coq", Grille.rouge);
-		singe = new Carte(new int[][] {{1,1}, {-1,-1}, {1,-1}, {-1,1}},"singe", Grille.bleu);
-		mante = new Carte(new int[][] {{0,-1},{-1,1},{1,1}} ,"mante", Grille.rouge);
-		cheval = new Carte(new int[][] {{-1,0},{0,1},{0,-1}},"cheval", Grille.rouge);
-		boeuf = new Carte(new int[][] {{1,0},{0,1},{0,-1}},"boeuf", Grille.bleu);
-		grue = new Carte(new int[][] {{-1,-1},{1,-1},{0,1}} ,"grue", Grille.bleu);
-		sanglier = new Carte(new int[][] {{-1,0},{1,0},{0,1}},"sanglier", Grille.rouge);
-		anguille = new Carte(new int[][] {{-1,1},{-1,-1},{1,0}},"anguille", Grille.bleu);
-		cobra = new Carte(new int[][] {{1,1},{1,-1},{-1,0}} ,"Cobra", Grille.rouge);
-	}
-
-        
-        //METHODE 3 ------------------------------------------------------------------------------------------------------
+        //CONSTRUCTEUR ------------------------------------------------------------------------------------------------------
         
         
 	Carte(int [][] CapaciteDeMouvementCarte, String nomCarte, int couleur) { //Constructeur de la carte
@@ -89,7 +55,7 @@ public class Carte {
 	}
 
         
-        //METHODE 4 ------------------------------------------------------------------------------------------------------
+        //CONSTRUCTEUR ------------------------------------------------------------------------------------------------------
         
         
 	public Carte(Carte cartecourante) { //Récupérer la référence de la carte
@@ -98,9 +64,35 @@ public class Carte {
 		nom  = cartecourante.prendreNom();
 		couleurCarte = cartecourante.prendreCouleur();
 	}
+        
+        
+        
+        //METHODE 1 ------------------------------------------------------------------------------------------------------
+        
+        
+        //Informations récupérée sur internet. Elles représentent les déplacements possible depuis la position du joueur. 
+	public static void init() { //Les grille.couleur permettent l'attribution de la carte à une orientation de grille d'un joueur (selon les règles du jeu)
+            
+		tigre = new Carte(new int[][] {{0,2},{0,-1}},"tigre", Grille.bleu); //Exemple, ici, le tigre peut aller deux cases en avant, et une case en arrière (0,2) et (0,-1)
+		dragon = new Carte(new int[][] {{-2,1}, {-1,-1}, {1,-1},{2,1}} ,"dragon", Grille.rouge); //Ici, il peut aller deux cases en diagonale vers la gauche (-2,1)
+		grenouille = new Carte(new int[][] {{-2,0}, {-1,1},  {1,-1}},"grenouille", Grille.rouge);
+		lapin = new Carte(new int[][] {{1,1},{-1,-1}, {2,0}},"lapin", Grille.bleu);
+		crabe = new Carte(new int[][] {{2,0},{-2,0},  {0,1}} ,"crabe", Grille.bleu);
+		elephant = new Carte(new int[][] {{1,0},{-1,0},{1,1},{-1,1}},"elephant", Grille.rouge);
+		oie = new Carte(new int[][] {{-1,1}, {1,-1},{-1,0},{1,0}},"oie", Grille.bleu);
+		coq = new Carte(new int[][] {{-1,-1},{1,1},{-1,0},{1,0}},"coq", Grille.rouge);
+		singe = new Carte(new int[][] {{1,1}, {-1,-1}, {1,-1}, {-1,1}},"singe", Grille.bleu);
+		mante = new Carte(new int[][] {{0,-1},{-1,1},{1,1}} ,"mante", Grille.rouge);
+		cheval = new Carte(new int[][] {{-1,0},{0,1},{0,-1}},"cheval", Grille.rouge);
+		boeuf = new Carte(new int[][] {{1,0},{0,1},{0,-1}},"boeuf", Grille.bleu);
+		grue = new Carte(new int[][] {{-1,-1},{1,-1},{0,1}} ,"grue", Grille.bleu);
+		sanglier = new Carte(new int[][] {{-1,0},{1,0},{0,1}},"sanglier", Grille.rouge);
+		anguille = new Carte(new int[][] {{-1,1},{-1,-1},{1,0}},"anguille", Grille.bleu);
+		cobra = new Carte(new int[][] {{1,1},{1,-1},{-1,0}} ,"cobra", Grille.rouge);
+	}
 
         
-        //METHODE 5 ------------------------------------------------------------------------------------------------------
+        //METHODE 2 ------------------------------------------------------------------------------------------------------
         
         
 	public int [][] prendreCapacitedeMouv() { //Référence des mouvements
@@ -108,7 +100,7 @@ public class Carte {
 	}
 
         
-        //METHODE 6 ------------------------------------------------------------------------------------------------------
+        //METHODE 3 ------------------------------------------------------------------------------------------------------
         
         
 	public String prendreNom() { //Référence nom
@@ -116,36 +108,14 @@ public class Carte {
 	}
 
         
-        //METHODE 7 ------------------------------------------------------------------------------------------------------
+        //METHODE 4 ------------------------------------------------------------------------------------------------------
         
         
 	public int prendreCouleur() { //Référence couleur
 		return couleurCarte;
 	}
 
-        
-        //METHODE 8 ------------------------------------------------------------------------------------------------------
-        
-        
-	public String prendreCouleurString() { //Renvoie la couleur en string de la carte
-		String couleur = "bleu";
-		if(couleurCarte == Grille.rouge) couleur = "rouge";
-		return couleur;
-	}
+      
 
-        
-        //METHODE 9 ------------------------------------------------------------------------------------------------------
-        
-        
-	public static Carte CarteParNom(String nomCarte) { //Vérifie que la carte en train d'être joué est la bonne
-            
-		for(Carte cartecourante : TouteslesCartes)
-			if(cartecourante.nom == nomCarte) //Si le nom est bien le même que celui de la carte, c'est ok
-                            
-				return cartecourante;
-		return null;
-	}
-
-        
-    
+ 
 }

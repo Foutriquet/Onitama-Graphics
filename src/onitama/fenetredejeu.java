@@ -1,14 +1,16 @@
 package onitama;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Mini-Projet - Onitama
+ * Nicolas TROUILLET - Mallory GOMBAULT
+ * Class - Interface Graphique
  */
 
 /**
  *
- * @author Utilisateur
+ * Nous sommes partis sur principe que les deux joueurs savent jouer, et que donc, ils respecteront les cases sur lesquelles ils peuvent jouer leurs pions en fonction des cartes. 
+ *
+ * 
  */
 public class fenetredejeu extends javax.swing.JFrame {
 
@@ -23,11 +25,14 @@ public class fenetredejeu extends javax.swing.JFrame {
     
     private Coordonnee bouton1;
     
+    private Carte carteajouer;
+    
     
     /**
      * Creates new form fenetredejeu
      */
     public fenetredejeu() {
+        
         initComponents();
         
         //Affichage d'ambiance 
@@ -47,7 +52,7 @@ public class fenetredejeu extends javax.swing.JFrame {
         Deck.Melanger();
 	//jeu = new Partie();
         Carte carte[] = Deck.Distribuer(); //On distribue les cartes
-		joueur1 = new Joueur(new Carte[] {carte[0],carte[3]}, Grille.rouge); //On crée les deux joueurs
+		joueur1 = new Joueur(new Carte[] {carte[0],carte[3]}, Grille.rouge); //On crée les deux joueurs et on leur attribue leur carte
 		joueur2 = new Joueur(new Carte[] {carte[1],carte[4]}, Grille.bleu);
 
 		//grille = null;
@@ -63,13 +68,55 @@ public class fenetredejeu extends javax.swing.JFrame {
                 
          
         AfficherPlateau(); //On commence par afficher la grille de base
-        
+        AffichageCarte(); //On commence par afficher les cartes des joueurs
         
         
     }
     
-//Affichage du plateau 
+//METHODE POUR L'INTEFRACE *********************************************************************************************************************************
+    
         
+    
+    
+    
+    //METHODE AFFICHAGE PLATEAU ********************************************************
+    
+    
+    public void AffichageCarte() {
+        
+        Cellule_Graphique CellGraphj1c1 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[0]);
+        Cellule_Graphique CellGraphj1c2 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[1]);
+        Cellule_Graphique CellGraphj2c1 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[0]);
+        Cellule_Graphique CellGraphj2c2 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[1]);
+        Cellule_Graphique CellGraphcm = new Cellule_Graphique(grille.RecupererCarteMilieu());
+                
+                carte1_jr.add(CellGraphj1c1);
+                carte2_jr.add(CellGraphj1c2);
+                carte1_jb.add(CellGraphj2c1);
+                carte2_jb.add(CellGraphj2c2);
+                carte_milieu.add(CellGraphcm);
+                
+            }
+            
+        
+    
+    //METHODE RECUPERATION CARTE A JOUER ***********************************************
+    
+       
+     public void CarteChoisie(Carte cartejoueur){ //joueur1.ReferenceCarteDuJoueur()[0];
+         
+         
+         carteajouer = cartejoueur;
+         
+         
+     }     
+            
+    
+    
+    //METHODE AFFICHAGE CARTES *************************************************************
+    
+    
+    
         public void AfficherPlateau() { //Méthode d'affichade de la grille
             
         
@@ -86,7 +133,22 @@ public class fenetredejeu extends javax.swing.JFrame {
         
         }
         
-        //Pour un bouton -----------------------------------------------------------------------------------
+        //********************************************************************************************************************************************
+        
+        
+        
+        //Ici, nous n'avons pas pu avancer car notre programme ne trouve pas nos images. Nous avons donc préparé à l'avance les méthodes qui doivent se mettre dans chaque sous-code d'un bouton
+        
+        //Dans l'ordre, nous appelerions VerifierDeVers avec en paramètre les coordonnées de la case
+        //Deuxièmement, nous appelerions la méthode jouer qui effectuera les changements nécessaires
+        
+        //Pour les boutons des cartes, nous utiliserons la méthode CarteChoisie avec, en paramètre, la carte du joueur concernée
+        
+        //Place au code des méthodes ci-dessus.
+        
+        
+        
+        //METHODE 1 - VERIFIER DE/VERS ********************************************************************************************************************************************
         
         
         public boolean VerifierDeVers(int ligne, int colonne) { //On cherche à savoir si le joueur choisit son pion à déplacer où la case sur laquelle il veut déplacer son pion
@@ -112,6 +174,12 @@ public class fenetredejeu extends javax.swing.JFrame {
             
         }
           
+        
+        
+        //METHODE 2 - JOUER ********************************************************************************************************************************************
+        
+        
+        
             public boolean Jouer(int ligne, int colonne) { //On joue un tour
             
                 
@@ -125,7 +193,7 @@ public class fenetredejeu extends javax.swing.JFrame {
                 Joueur Jgagnant = grille.JoueurEnAttente();
                 
                 if (Jgagnant.ReferenceCouleurDuJoueur() == 1) { //On annonce le gagnant
-                   System.out.println("Victoire du joueur Rouge ! ");
+                   System.out.println("Victoire du joueur Rouge ! "); //Pour le moment, ce sont des strings, mais nous modifierons cela lorsque nos images fonctionneront
                } else {
                    System.out.println("Victoire du joueur Bleu ! ");
                }
@@ -164,12 +232,15 @@ public class fenetredejeu extends javax.swing.JFrame {
                 
             //Sinon, on passe au tour suivant, et on actualise le plateau
             
+            Carte carteechanger = grille.echangerCarte(carteajouer); //On échange les références des cartes au milieu
+            grille.echangerCarteMilieu(carteechanger); //On donne la nouvelle carte à la liste du joueur
             
-            //A compléter, changement de carte du milieu avec celle du joueur
+            
+            //On passe au prochain tour, on affiche les nouvelles modifications
             
             grille.JoueurSuivant();
             AfficherPlateau();
-            
+            AffichageCarte();
             
             
             }
@@ -179,7 +250,7 @@ public class fenetredejeu extends javax.swing.JFrame {
         
         
         
-        
+       
         
         
         

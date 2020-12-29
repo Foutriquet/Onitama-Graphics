@@ -49,41 +49,9 @@ public class Coordonnee {
 		MettreEnCommun(element[0],element[1]);
 	}
 
+
         
         //METHODE 5 ------------------------------------------------------------------------------------------------------
-        
-        
-	public boolean DeplacerPion(int[] deplacement, int couleur) { //Déplacement de la position d'un pion
-            
-		return DeplacerCoordonnee(deplacement[0], deplacement[1], couleur);
-	}
-
-        
-        //METHODE 6 ------------------------------------------------------------------------------------------------------
-        
-        
-	public boolean DeplacerCoordonnee(int Lnouvelle, int Cnouvelle, int couleur) { //Deplacement des coordonnées d'un pion
-            
-            //On initialise nos variables
-		int NouvelleLigne = ligne;
-		int NouvelleColonne = colonne;
-
-		NouvelleLigne += Lnouvelle*-1*couleur; //Comme les couleurs sont égales à 1 et -1 et que les grilles sont en 
-                //orientation opposée, on utilise ce calcul pour déplacer parfaitement les coordonnées en fonction de la carte à jouer
-                
-		NouvelleColonne += Cnouvelle*couleur;
-
-		if((NouvelleLigne >= 0 && NouvelleLigne < 5) && (NouvelleColonne >= 0 && NouvelleColonne < 5)) { //On vérifie que le déplacement est faisable dans les limites de la grille
-                    
-			MettreEnCommun(NouvelleLigne, NouvelleColonne); //Rassembler les coordonnees 
-			return true; //Le changement s'est bien passé
-		}
-                
-		return false; //Le changement s'est mal passé
-	}
-
-        
-        //METHODE 7 ------------------------------------------------------------------------------------------------------
         
         
         
@@ -96,7 +64,7 @@ public class Coordonnee {
 	}
 
         
-        //METHODE 8 ------------------------------------------------------------------------------------------------------
+        //METHODE 6 ------------------------------------------------------------------------------------------------------
         
         
 	public void initialiserLigne(int n) { //On intialise la ligne
@@ -107,7 +75,7 @@ public class Coordonnee {
 	}
 
         
-        //METHODE 9 ------------------------------------------------------------------------------------------------------
+        //METHODE 7 ------------------------------------------------------------------------------------------------------
         
         
 	public void initialiserColonne(int n){ //On initialise la colonne
@@ -118,7 +86,7 @@ public class Coordonnee {
 	}
 
         
-        //METHODE 10------------------------------------------------------------------------------------------------------
+        //METHODE 8------------------------------------------------------------------------------------------------------
         
         
 	public int ReferenceLigne() { //On récupère la référence de la ligne
@@ -126,7 +94,7 @@ public class Coordonnee {
 	}
 
         
-        //METHODE 11 ------------------------------------------------------------------------------------------------------
+        //METHODE 9 ------------------------------------------------------------------------------------------------------
         
         
 	public int ReferenceColonne() { //On récupère la référence de la colonne
@@ -134,7 +102,7 @@ public class Coordonnee {
 	}
 
         
-        //METHODE 12 ------------------------------------------------------------------------------------------------------
+        //METHODE 10 ------------------------------------------------------------------------------------------------------
         
         
 	public int[] ReferencePaire() { //On récupère la référence de la paire colonne/ligne

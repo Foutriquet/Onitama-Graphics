@@ -19,7 +19,6 @@ public class Grille {
 
 	private Pions pionsEnJeu [][] = new Pions[5][5]; //On crée les pions
         
-        private Coordonnee grilleDeJeu[][] = new Coordonnee[5][5];
 
 	private boolean PresenceRoiBleu = true; 
 	private boolean PresenceRoiRouge  = true;
@@ -151,16 +150,9 @@ public class Grille {
 		return pionsEnJeu[colonne][ligne];
 	}
 
-        
-        //METHODE 12 ------------------------------------------------------------------------------------------------------
-        
-        
-	public Pions [] PionsDuJoueur(Joueur joueurcourant) { //Référence des pions d'un joueur
-		return ReferencePionsCouleur(joueurcourant.ReferenceCouleurDuJoueur());
-	}
 
         
-        //METHODE 13 ------------------------------------------------------------------------------------------------------
+        //METHODE 12 ------------------------------------------------------------------------------------------------------
         
         
 	public Pions [] ReferencePionsCouleur(int couleur) { //On cherche la référence des pions par rapport à leur couleur
@@ -176,7 +168,7 @@ public class Grille {
 	}
 
         
-        //METHODE 14 ------------------------------------------------------------------------------------------------------
+        //METHODE 13 ------------------------------------------------------------------------------------------------------
         
         
 	public Pions ReferencePions2(Coordonnee position) { //On récupère la position du pion
@@ -184,7 +176,7 @@ public class Grille {
 	}
 
         
-        //METHODE 15 ------------------------------------------------------------------------------------------------------
+        //METHODE 14 ------------------------------------------------------------------------------------------------------
         
         
 	public Carte echangerCarte(Carte carteaechanger) { //Changer la carte du milieu avec celle du joueur une fois qu'il a joué
@@ -194,7 +186,7 @@ public class Grille {
 	}
 
         
-        //METHODE 16 ------------------------------------------------------------------------------------------------------
+        //METHODE 15 ------------------------------------------------------------------------------------------------------
         
         
 	public Joueur etreGagnant() { //On prend la couleur du gagnant
@@ -206,7 +198,7 @@ public class Grille {
 	}
 
         
-        //METHODE 17 ------------------------------------------------------------------------------------------------------
+        //METHODE 16 ------------------------------------------------------------------------------------------------------
         
         
 	public boolean VerifierGagnant() { //On vérifie qui gagne
@@ -228,15 +220,18 @@ public class Grille {
 	}
 
         
-        //METHODE 18 ------------------------------------------------------------------------------------------------------
+        //METHODE 17 ------------------------------------------------------------------------------------------------------
         
         
 	public void jouer(Coordonnee de, Coordonnee vers) { //Jouer un pion
+            
+            //Si on mange le roi
 		if(ReferencePions2(vers) != null && ReferencePions2(vers).etreRoi() && ReferencePions2(vers).ReferenceCouleurPion() != ReferencePions2(de).ReferenceCouleurPion()) //On vérifie que le mouvement est faisable
 			if(ReferencePions2(vers).ReferenceCouleurPion() == bleu) //On vérifie que le roi n'est pas à l'emplacement
 				PresenceRoiBleu = false;
 			else
-				PresenceRoiRouge = false;
+				PresenceRoiRouge = false; 
+// ------------------------------------------------------------------------------------------------------------------------
 
 		pionsEnJeu[vers.ReferenceColonne()][vers.ReferenceLigne()] = new Pions(ReferencePions2(de)); //On déplace le pion à ses nouvelles coordonnées
                 
@@ -245,20 +240,8 @@ public class Grille {
 		pionsEnJeu[de.ReferenceColonne()][de.ReferenceLigne()] = null; //L'ancienne position devient null
 	}
 
-        
-        //METHODE 19 ------------------------------------------------------------------------------------------------------
-        
-        
-	public void afficherGrille() { //On affiche la grille
-		for(int i = 0; i < 5; i++) {
-			for(int j = 0; j < 5; j++)
-				System.out.printf("|%2s ",(pionsEnJeu[i][j] == null)?"":(pionsEnJeu[i][j].ReferenceCouleurPion() == rouge)? "r":"b");
-			System.out.println("|");
-		}
-	}
-
-        
-        //METHODE 20 ------------------------------------------------------------------------------------------------------
+       
+        //METHODE 18 ------------------------------------------------------------------------------------------------------
         
         
 	public Joueur CouleurJoueur(int couleur) { //On cherche a savoir si le joueur d'une certaine couleur joue ou est en attente
@@ -268,7 +251,7 @@ public class Grille {
 	}
 
         
-        //METHODE 21 ------------------------------------------------------------------------------------------------------
+        //METHODE 19 ------------------------------------------------------------------------------------------------------
         
         
 	public void echangerCarteMilieu(Carte carteajouer) { //On échange la carte du joueur avec celle du milieu dans sa liste
@@ -289,12 +272,7 @@ public class Grille {
 	}
         
         
-        //METHODE 21 ------------------------------------------------------------------------------------------------------
-        
-        
-	public Coordonnee[][] ReferenceGrille() { //Référence des pions restant sur la grille
-		return grilleDeJeu;
-	}
+       
 
         
 }

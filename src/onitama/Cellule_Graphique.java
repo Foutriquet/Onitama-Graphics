@@ -19,6 +19,7 @@ import javax.swing.JButton;
 public class Cellule_Graphique extends JButton {
     
     Pions CelluleAssociee;
+    Carte CarteAssociee;
     
     //Image du plateau *************************************************************
     
@@ -63,12 +64,17 @@ public class Cellule_Graphique extends JButton {
         CelluleAssociee = coordAssoc;
     }
     
+    Cellule_Graphique (Carte carteAssoc) {
+        CarteAssociee = carteAssoc;
+    }
+    
     
     @Override
     public void paintComponent (Graphics G) {
         super.paintComponent(G);
         
         //Si la case possède un roi 
+        
         
         if (CelluleAssociee.etreRoi() == true) {
             
@@ -134,6 +140,83 @@ public class Cellule_Graphique extends JButton {
     }
         
         
+       
+        
+        //***********************************************************************************************************
+        
+        
+    //Attribution des icons des cartes aux labels
+        
+    for (int i = 0; i<5 ; i++) {   
+        if(CarteAssociee.prendreNom() == "tigre") {
+            setIcon(img_tigre); 
+        }
+        
+        if(CarteAssociee.prendreNom() == "cobra") {
+            setIcon(img_cobra);
+        }
+        
+        if(CarteAssociee.prendreNom() == "sanglier") {
+            setIcon(img_sanglier);
+        }
+        
+        if(CarteAssociee.prendreNom() == "crabe") {
+            setIcon(img_crabe);   
+        } 
+        
+        if(CarteAssociee.prendreNom() == "anguille") {
+            setIcon(img_anguille);  
+        } 
+        
+        if(CarteAssociee.prendreNom() == "elephant") {
+            setIcon(img_elephant);
+        }
+        
+        if(CarteAssociee.prendreNom() == "cheval") {
+            setIcon(img_cheval);
+        }
+        
+        if(CarteAssociee.prendreNom() == "boeuf") {
+            setIcon(img_boeuf);
+        }
+        
+        if(CarteAssociee.prendreNom() == "lapin") {
+            setIcon(img_lapin);   
+        } 
+        
+        if(CarteAssociee.prendreNom() == "oie") {
+            setIcon(img_oie);
+        }
+        
+        if(CarteAssociee.prendreNom() == "grue") {
+            setIcon(img_grue);
+        }
+        
+        if(CarteAssociee.prendreNom() == "dragon") {
+            setIcon(img_dragon);
+        }
+        
+        if(CarteAssociee.prendreNom() == "coq") {
+            setIcon(img_coq);
+        }
+        
+        if(CarteAssociee.prendreNom() == "mante") {
+            setIcon(img_mante); 
+        } 
+        
+        if(CarteAssociee.prendreNom() == "singe") {
+            setIcon(img_singe);
+        }
+            
+        } 
+        }
+        
+        
+        
+        
+        
         
     }
-}
+        
+        
+
