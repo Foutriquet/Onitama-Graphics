@@ -51,7 +51,7 @@ public class Cellule_Graphique extends JButton {
     ImageIcon img_singe = new javax.swing.ImageIcon(getClass().getResource("/images/monkey.png"));
     ImageIcon img_mante = new javax.swing.ImageIcon(getClass().getResource("/images/mantis.png"));
     ImageIcon img_boeuf = new javax.swing.ImageIcon(getClass().getResource("/images/ox.png"));
-    ImageIcon img_lapin = new javax.swing.ImageIcon(getClass().getResource("/images/rabit.png"));
+    ImageIcon img_lapin = new javax.swing.ImageIcon(getClass().getResource("/images/rabbit.png"));
     ImageIcon img_coq = new javax.swing.ImageIcon(getClass().getResource("/images/rooster.png"));
     ImageIcon img_tigre = new javax.swing.ImageIcon(getClass().getResource("/images/tiger.png"));
 
@@ -75,8 +75,15 @@ public class Cellule_Graphique extends JButton {
         
         //Si la case possède un roi 
         
+        /*if ((CelluleAssociee == null && CelluleAssociee.ReferenceCoordonnee() == Coordonnee.TempleBleu) || (CelluleAssociee == null && CelluleAssociee.ReferenceCoordonnee() == Coordonnee.TempleRouge)) {
+        //Si ce n'est qu'un temple vide
+            setIcon(img_temple);
+
+        } else*/ if (CelluleAssociee == null) { //Si ce n'est qu'une case vide
         
-        if (CelluleAssociee.etreRoi() == true) {
+            setIcon(img_vide); 
+        
+        } else if (CelluleAssociee.etreRoi() == true) {
             
         //Dépendant de la couleur du roi
             switch (CelluleAssociee.ReferenceCouleurPion()) {
@@ -130,16 +137,7 @@ public class Cellule_Graphique extends JButton {
                 }
     
     
-    } else if ((CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 4) || (CelluleAssociee.ReferenceCoordonnee().ReferenceLigne() == 2 && CelluleAssociee.ReferenceCoordonnee().ReferenceColonne() == 0)) {
-        //Si ce n'est qu'un temple vide
-        setIcon(img_temple);
-
-    } else { //Si ce n'est qu'une case vide
-        
-        setIcon(img_vide);
-    }
-        
-        
+    }   
        
         
         //***********************************************************************************************************
@@ -147,7 +145,10 @@ public class Cellule_Graphique extends JButton {
         
     //Attribution des icons des cartes aux labels
         
-    for (int i = 0; i<5 ; i++) {   
+    for (int i = 0; i<16 ; i++) {   
+        
+        if (CarteAssociee == null) return;
+        
         if(CarteAssociee.prendreNom() == "tigre") {
             setIcon(img_tigre); 
         }
@@ -208,6 +209,10 @@ public class Cellule_Graphique extends JButton {
             setIcon(img_singe);
         }
             
+        if(CarteAssociee.prendreNom() == "grenouille") {
+            setIcon(img_grenouille);
+        }
+        
         } 
         }
         
