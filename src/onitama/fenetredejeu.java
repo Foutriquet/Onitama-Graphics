@@ -15,13 +15,13 @@ package onitama;
 public class fenetredejeu extends javax.swing.JFrame {
 
 
-    private static Partie jeu;
+    //private static Partie jeu;
     
     private Joueur joueur1, joueur2;
 
     private Grille grille;
 
-    private static int NombreJoueur = 2;
+    //private static int NombreJoueur = 2;
     
     private Coordonnee bouton1;
     
@@ -37,13 +37,18 @@ public class fenetredejeu extends javax.swing.JFrame {
         
         //Affichage d'ambiance 
         
-        
-        carte1_jb.setVisible(false);
-        carte2_jb.setVisible(false);
+        panneau_message.setVisible(false);
         carte1_jr.setVisible(false);
         carte2_jr.setVisible(false);
+        carte1_jb.setVisible(false);
+        carte2_jb.setVisible(false);
         plateau.setVisible(false);
         carte_milieu.setVisible(false);
+        labeljb1.setVisible(false);
+        labeljb2.setVisible(false);
+        labelcm.setVisible(false);
+        labeljr1.setVisible(false);
+        labeljr2.setVisible(false);
         
         //Préparation du jeu 
         
@@ -66,10 +71,53 @@ public class fenetredejeu extends javax.swing.JFrame {
 		joueur1.InitialiserGrille(grille); //On crée les grilles des joueurs
 		joueur2.InitialiserGrille(grille);
                 
+                AffichageCarte();
+                
          
-        AfficherPlateau(); //On commence par afficher la grille de base
-        AffichageCarte(); //On commence par afficher les cartes des joueurs
+        //AfficherPlateau(); //On commence par afficher la grille de base
+       // AffichageCarte(); //On commence par afficher les cartes des joueurs
         
+        for (int i = 4; i >= 0; i--) {
+            for (int j = 0; j < 5; j++) { //On parcours le plateau
+                
+                int ii = i;
+                int jj = j;
+                        
+                Cellule_Graphique CellGraph = new Cellule_Graphique(grille.ReferencePions()[i][j]);
+                plateau.add(CellGraph);
+                CellGraph.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        
+                       boolean tour = JouerFenetre(ii,jj); 
+                       if (tour == false) return; //Le joueur n'a pas fini son tour
+                       
+                       else {
+                            //Le tour s'est bien passé
+                           //On passe au prochain tour, on affiche les nouvelles modifications
+                           
+                           grille.JoueurSuivant();
+                           if (grille.JoueurCourant() == joueur1) {
+                               message.setText("c'est au tour du joueur bleu");
+                           } else {
+                               message.setText("c'est au tour du joueur rouge");
+                           }
+                           carte1_jb.repaint();
+                           carte2_jb.repaint();
+                           carte1_jr.repaint();
+                           carte2_jr.repaint();
+                           carte_milieu.repaint();
+                       
+                           
+                       }
+                       
+                       
+                        
+                    }
+
+                    });
+            }
+            
+        }
         
     }
     
@@ -79,27 +127,62 @@ public class fenetredejeu extends javax.swing.JFrame {
     
     
     
-    //METHODE AFFICHAGE PLATEAU ********************************************************
+    //METHODE AFFICHAGE CARTES ********************************************************
     
     
     public void AffichageCarte() {
         
         Cellule_Graphique CellGraphj1c1 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[0]);
         Cellule_Graphique CellGraphj1c2 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[1]);
-        Cellule_Graphique CellGraphj2c1 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[0]);
-        Cellule_Graphique CellGraphj2c2 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[1]);
+        Cellule_Graphique CellGraphj2c1 = new Cellule_Graphique(joueur2.ReferenceCarteDuJoueur()[0]);
+        Cellule_Graphique CellGraphj2c2 = new Cellule_Graphique(joueur2.ReferenceCarteDuJoueur()[1]);
         Cellule_Graphique CellGraphcm = new Cellule_Graphique(grille.RecupererCarteMilieu());
-                
-                carte1_jr.add(CellGraphj1c1);
-                carte2_jr.add(CellGraphj1c2);
-                carte1_jb.add(CellGraphj2c1);
-                carte2_jb.add(CellGraphj2c2);
+        
+        CellGraphj1c1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
+                        
+                        CarteChoisie(joueur1.ReferenceCarteDuJoueur()[0]);
+                        message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
+                    }
+        });
+        
+        CellGraphj1c2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
+                        
+                        CarteChoisie(joueur1.ReferenceCarteDuJoueur()[1]);
+                        message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
+                    }
+        });
+        
+        CellGraphj2c1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
+                        
+                        CarteChoisie(joueur2.ReferenceCarteDuJoueur()[0]);
+                        message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
+                    }
+        });
+        
+        CellGraphj2c2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
+                        
+                        CarteChoisie(joueur2.ReferenceCarteDuJoueur()[1]);
+                        message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
+                    }
+        });
+        
+        
+                carte1_jb.add(CellGraphj1c1);
+                carte2_jb.add(CellGraphj1c2);
+                carte1_jr.add(CellGraphj2c1);
+                carte2_jr.add(CellGraphj2c2);
                 carte_milieu.add(CellGraphcm);
+        
                 
+                
+                 
             }
             
         
-    
     //METHODE RECUPERATION CARTE A JOUER ***********************************************
     
        
@@ -112,43 +195,8 @@ public class fenetredejeu extends javax.swing.JFrame {
      }     
             
     
-    
-    //METHODE AFFICHAGE CARTES *************************************************************
-    
-    
-    
-        public void AfficherPlateau() { //Méthode d'affichade de la grille
-            
         
-        for (int i = 4; i>=0; i--) { 
-            for (int j = 0; j<5; j++) { //On parcours le plateau
-                
-                
-                Cellule_Graphique CellGraph = new Cellule_Graphique(grille.ReferencePions()[i][j]);
-                plateau.add(CellGraph);
-                
-                
-            }
-        }
-        
-        }
-        
-        //********************************************************************************************************************************************
-        
-        
-        
-        //Ici, nous n'avons pas pu avancer car notre programme ne trouve pas nos images. Nous avons donc préparé à l'avance les méthodes qui doivent se mettre dans chaque sous-code d'un bouton
-        
-        //Dans l'ordre, nous appelerions VerifierDeVers avec en paramètre les coordonnées de la case
-        //Deuxièmement, nous appelerions la méthode jouer qui effectuera les changements nécessaires
-        
-        //Pour les boutons des cartes, nous utiliserons la méthode CarteChoisie avec, en paramètre, la carte du joueur concernée
-        
-        //Place au code des méthodes ci-dessus.
-        
-        
-        
-        //METHODE 1 - VERIFIER DE/VERS ********************************************************************************************************************************************
+        //METHODE - VERIFIER DE/VERS ********************************************************************************************************************************************
         
         
         public boolean VerifierDeVers(int ligne, int colonne) { //On cherche à savoir si le joueur choisit son pion à déplacer où la case sur laquelle il veut déplacer son pion
@@ -161,6 +209,11 @@ public class fenetredejeu extends javax.swing.JFrame {
                 
                 bouton1.initialiserLigne(ligne); //On récupère la référence de coordonnée de cette case
                 bouton1.initialiserColonne(colonne);
+                if (couleurjoueur == 1) {
+                   message.setText("le joueur rouge à choisi son pion à bouger");
+                } else {
+                   message.setText("le joueur bleu à choisi son pion à bouger");
+                }
                 
                 return true;
                 
@@ -176,15 +229,20 @@ public class fenetredejeu extends javax.swing.JFrame {
           
         
         
-        //METHODE 2 - JOUER ********************************************************************************************************************************************
+        //METHODE - JOUER ********************************************************************************************************************************************
         
         
         
-            public boolean Jouer(int ligne, int colonne) { //On joue un tour
+            public boolean JouerFenetre(int ligne, int colonne) { //On joue un tour
             
-                
+            Carte cvariable = carteajouer;
+            
             //Vérifier que le joueur n'a pas perdu tous ses pions ------------
+            AffichageCarte();   
+            
+            if (carteajouer == cvariable) return false;
                 
+            
             Joueur jc = grille.JoueurCourant();
             int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
             
@@ -193,9 +251,9 @@ public class fenetredejeu extends javax.swing.JFrame {
                 Joueur Jgagnant = grille.JoueurEnAttente();
                 
                 if (Jgagnant.ReferenceCouleurDuJoueur() == 1) { //On annonce le gagnant
-                   System.out.println("Victoire du joueur Rouge ! "); //Pour le moment, ce sont des strings, mais nous modifierons cela lorsque nos images fonctionneront
+                   message.setText("Victoire du joueur Rouge ! Merci d'avoir joué"); //Pour le moment, ce sont des strings, mais nous modifierons cela lorsque nos images fonctionneront
                } else {
-                   System.out.println("Victoire du joueur Bleu ! ");
+                   message.setText("Victoire du joueur Bleu ! Merci d'avoir joué");
                }
                 
             }
@@ -223,9 +281,9 @@ public class fenetredejeu extends javax.swing.JFrame {
                
                if (Jgagnant.ReferenceCouleurDuJoueur() == 1) { //On annonce le vainqueur
                    
-                   System.out.println("Victoire du joueur Rouge ! ");
+                   message.setText("Victoire du joueur Rouge ! Merci d'avoir joué");
                } else {
-                   System.out.println("Victoire du joueur Bleu ! ");
+                   message.setText("Victoire du joueur Bleu ! Merci d'avoir joué");
                }
                
            }
@@ -234,14 +292,9 @@ public class fenetredejeu extends javax.swing.JFrame {
             
             Carte carteechanger = grille.echangerCarte(carteajouer); //On échange les références des cartes au milieu
             grille.echangerCarteMilieu(carteechanger); //On donne la nouvelle carte à la liste du joueur
-            
-            
-            //On passe au prochain tour, on affiche les nouvelles modifications
-            
-            grille.JoueurSuivant();
-            AfficherPlateau();
+
+            plateau.repaint();
             AffichageCarte();
-            
             
             }
             
@@ -265,16 +318,24 @@ public class fenetredejeu extends javax.swing.JFrame {
 
         plateau = new javax.swing.JPanel();
         carte_milieu = new javax.swing.JPanel();
-        carte2_jr = new javax.swing.JPanel();
-        carte1_jr = new javax.swing.JPanel();
-        carte1_jb = new javax.swing.JPanel();
         carte2_jb = new javax.swing.JPanel();
+        carte1_jb = new javax.swing.JPanel();
+        carte1_jr = new javax.swing.JPanel();
+        carte2_jr = new javax.swing.JPanel();
         demarrer = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         bouton_demarrer = new javax.swing.JButton();
+        panneau_message = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        message = new javax.swing.JTextArea();
+        labeljb2 = new javax.swing.JLabel();
+        labeljr2 = new javax.swing.JLabel();
+        labeljb1 = new javax.swing.JLabel();
+        labelcm = new javax.swing.JLabel();
+        labeljr1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1800, 1800));
@@ -285,24 +346,24 @@ public class fenetredejeu extends javax.swing.JFrame {
         getContentPane().add(plateau, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 10, 960, 960));
 
         carte_milieu.setBackground(new java.awt.Color(255, 255, 255));
-        carte_milieu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(carte_milieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 300, 185));
-
-        carte2_jr.setBackground(new java.awt.Color(255, 255, 255));
-        carte2_jr.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(carte2_jr, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 300, 185));
-
-        carte1_jr.setBackground(new java.awt.Color(255, 255, 255));
-        carte1_jr.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(carte1_jr, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 300, 185));
-
-        carte1_jb.setBackground(new java.awt.Color(255, 255, 255));
-        carte1_jb.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(carte1_jb, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 750, 300, 185));
+        carte_milieu.setLayout(new java.awt.GridLayout(1, 1));
+        getContentPane().add(carte_milieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 300, 185));
 
         carte2_jb.setBackground(new java.awt.Color(255, 255, 255));
-        carte2_jb.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(carte2_jb, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 750, 300, 185));
+        carte2_jb.setLayout(new java.awt.GridLayout(1, 1));
+        getContentPane().add(carte2_jb, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 300, 185));
+
+        carte1_jb.setBackground(new java.awt.Color(255, 255, 255));
+        carte1_jb.setLayout(new java.awt.GridLayout(1, 1));
+        getContentPane().add(carte1_jb, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 300, 185));
+
+        carte1_jr.setBackground(new java.awt.Color(255, 255, 255));
+        carte1_jr.setLayout(new java.awt.GridLayout(1, 1));
+        getContentPane().add(carte1_jr, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 750, 300, 185));
+
+        carte2_jr.setBackground(new java.awt.Color(255, 255, 255));
+        carte2_jr.setLayout(new java.awt.GridLayout(1, 1));
+        getContentPane().add(carte2_jr, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 750, 300, 185));
 
         demarrer.setBackground(new java.awt.Color(0, 0, 0));
         demarrer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -338,6 +399,38 @@ public class fenetredejeu extends javax.swing.JFrame {
 
         getContentPane().add(demarrer, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 600, 600));
 
+        panneau_message.setBackground(new java.awt.Color(255, 204, 153));
+        panneau_message.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        message.setColumns(20);
+        message.setFont(new java.awt.Font("Tempus Sans ITC", 0, 11)); // NOI18N
+        message.setRows(5);
+        jScrollPane2.setViewportView(message);
+
+        panneau_message.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, -1));
+
+        getContentPane().add(panneau_message, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, 350, 150));
+
+        labeljb2.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        labeljb2.setText("Carte 2 - joueur bleu");
+        getContentPane().add(labeljb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, -1, -1));
+
+        labeljr2.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        labeljr2.setText("Carte 2 - joueur rouge");
+        getContentPane().add(labeljr2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 960, -1, -1));
+
+        labeljb1.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        labeljb1.setText("Carte 1 - joueur bleu");
+        getContentPane().add(labeljb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
+
+        labelcm.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        labelcm.setText("Carte du milieu");
+        getContentPane().add(labelcm, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 600, -1, -1));
+
+        labeljr1.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        labeljr1.setText("Carte 1 - joueur rouge");
+        getContentPane().add(labeljr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 960, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -345,13 +438,23 @@ public class fenetredejeu extends javax.swing.JFrame {
         
         //Affichage d'ambiance
         
+        carte1_jr.setVisible(true);
+        panneau_message.setVisible(true);
+        carte2_jr.setVisible(true);
         carte1_jb.setVisible(true);
         carte2_jb.setVisible(true);
-        carte1_jr.setVisible(true);
-        carte2_jr.setVisible(true);
         carte_milieu.setVisible(true);
         plateau.setVisible(true);
         demarrer.setVisible(false);
+        bouton_demarrer.setEnabled(false);
+        
+        labeljb1.setVisible(true);
+        labeljb2.setVisible(true);
+        labelcm.setVisible(true);
+        labeljr1.setVisible(true);
+        labeljr2.setVisible(true);
+        
+        message.setText("Le joueur bleu commence ! Bonne chance");
     }//GEN-LAST:event_bouton_demarrerActionPerformed
 
     /**
@@ -403,6 +506,14 @@ public class fenetredejeu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelcm;
+    private javax.swing.JLabel labeljb1;
+    private javax.swing.JLabel labeljb2;
+    private javax.swing.JLabel labeljr1;
+    private javax.swing.JLabel labeljr2;
+    private javax.swing.JTextArea message;
+    private javax.swing.JPanel panneau_message;
     private javax.swing.JPanel plateau;
     // End of variables declaration//GEN-END:variables
 }
