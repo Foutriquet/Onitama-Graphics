@@ -402,14 +402,17 @@ public class fenetredejeu extends javax.swing.JFrame {
         panneau_message.setBackground(new java.awt.Color(255, 204, 153));
         panneau_message.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jScrollPane2.setToolTipText("");
+
         message.setColumns(20);
-        message.setFont(new java.awt.Font("Tempus Sans ITC", 0, 11)); // NOI18N
+        message.setFont(new java.awt.Font("Tempus Sans ITC", 0, 18)); // NOI18N
         message.setRows(5);
+        message.setPreferredSize(new java.awt.Dimension(360, 60));
         jScrollPane2.setViewportView(message);
 
-        panneau_message.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, -1));
+        panneau_message.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 370, 60));
 
-        getContentPane().add(panneau_message, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, 350, 150));
+        getContentPane().add(panneau_message, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, 400, 100));
 
         labeljb2.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
         labeljb2.setText("Carte 2 - joueur bleu");
