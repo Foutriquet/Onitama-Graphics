@@ -5,38 +5,34 @@ package onitama;
  * Nicolas TROUILLET - Mallory GOMBAULT
  * Class - Interface Graphique
  */
-
 /**
  *
- * Nous sommes partis sur principe que les deux joueurs savent jouer, et que donc, ils respecteront les cases sur lesquelles ils peuvent jouer leurs pions en fonction des cartes. 
+ * Nous sommes partis sur principe que les deux joueurs savent jouer, et que
+ * donc, ils respecteront les cases sur lesquelles ils peuvent jouer leurs pions
+ * en fonction des cartes.
  *
- * 
+ *
  */
 public class fenetredejeu extends javax.swing.JFrame {
 
-
     //private static Partie jeu;
-    
     private Joueur joueur1, joueur2;
 
     private Grille grille;
 
     //private static int NombreJoueur = 2;
-    
     private Coordonnee bouton1;
-    
-    private Carte carteajouer;
-    
-    
+
+    private Carte carteajouer = null;
+
     /**
      * Creates new form fenetredejeu
      */
     public fenetredejeu() {
-        
+
         initComponents();
-        
+
         //Affichage d'ambiance 
-        
         panneau_message.setVisible(false);
         carte1_jr.setVisible(false);
         carte2_jr.setVisible(false);
@@ -49,264 +45,252 @@ public class fenetredejeu extends javax.swing.JFrame {
         labelcm.setVisible(false);
         labeljr1.setVisible(false);
         labeljr2.setVisible(false);
-        
-        //Préparation du jeu 
-        
+
+        //Préparation du jeu ********************************************************************
         Carte.init();
-	Deck.init();
+        Deck.init();
         Deck.Melanger();
-	//jeu = new Partie();
+        //jeu = new Partie();
         Carte carte[] = Deck.Distribuer(); //On distribue les cartes
-		joueur1 = new Joueur(new Carte[] {carte[0],carte[3]}, Grille.rouge); //On crée les deux joueurs et on leur attribue leur carte
-		joueur2 = new Joueur(new Carte[] {carte[1],carte[4]}, Grille.bleu);
+        joueur1 = new Joueur(new Carte[]{carte[0], carte[3]}, Grille.rouge); //On crée les deux joueurs et on leur attribue leur carte
+        joueur2 = new Joueur(new Carte[]{carte[1], carte[4]}, Grille.bleu);
 
-		//grille = null;
+        grille = null;
 
-		if(carte[2].prendreCouleur() == Grille.rouge) //On attribue les cartes aux joueurs
-			grille = new Grille(carte[2], joueur1, joueur2);
-		else
-			grille = new Grille(carte[2], joueur2, joueur1);
-
-
-		joueur1.InitialiserGrille(grille); //On crée les grilles des joueurs
-		joueur2.InitialiserGrille(grille);
-                
-                AffichageCarte();
-                
-         
-        //AfficherPlateau(); //On commence par afficher la grille de base
-       // AffichageCarte(); //On commence par afficher les cartes des joueurs
-        
-        for (int i = 4; i >= 0; i--) {
-            for (int j = 0; j < 5; j++) { //On parcours le plateau
-                
-                int ii = i;
-                int jj = j;
-                        
-                Cellule_Graphique CellGraph = new Cellule_Graphique(grille.ReferencePions()[i][j]);
-                plateau.add(CellGraph);
-                CellGraph.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        
-                       boolean tour = JouerFenetre(ii,jj); 
-                       if (tour == false) return; //Le joueur n'a pas fini son tour
-                       
-                       else {
-                            //Le tour s'est bien passé
-                           //On passe au prochain tour, on affiche les nouvelles modifications
-                           
-                           grille.JoueurSuivant();
-                           if (grille.JoueurCourant() == joueur1) {
-                               message.setText("c'est au tour du joueur bleu");
-                           } else {
-                               message.setText("c'est au tour du joueur rouge");
-                           }
-                           carte1_jb.repaint();
-                           carte2_jb.repaint();
-                           carte1_jr.repaint();
-                           carte2_jr.repaint();
-                           carte_milieu.repaint();
-                       
-                           
-                       }
-                       
-                       
-                        
-                    }
-
-                    });
-            }
-            
+        if (carte[2].prendreCouleur() == Grille.rouge) //On mets les joueurs dans le bon ordre
+        {
+            grille = new Grille(carte[2], joueur1, joueur2);
+        } else {
+            grille = new Grille(carte[2], joueur2, joueur1);
         }
-        
-    }
-    
-//METHODE POUR L'INTEFRACE *********************************************************************************************************************************
-    
-        
-    
-    
-    
-    //METHODE AFFICHAGE CARTES ********************************************************
-    
-    
-    public void AffichageCarte() {
-        
+
+        joueur1.InitialiserGrille(grille); //On crée les grilles des joueurs
+        joueur2.InitialiserGrille(grille);
+
+        // AFFICHAGE CARTES **********************************************************************
+        //Création des cartes graphiques
         Cellule_Graphique CellGraphj1c1 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[0]);
         Cellule_Graphique CellGraphj1c2 = new Cellule_Graphique(joueur1.ReferenceCarteDuJoueur()[1]);
         Cellule_Graphique CellGraphj2c1 = new Cellule_Graphique(joueur2.ReferenceCarteDuJoueur()[0]);
         Cellule_Graphique CellGraphj2c2 = new Cellule_Graphique(joueur2.ReferenceCarteDuJoueur()[1]);
         Cellule_Graphique CellGraphcm = new Cellule_Graphique(grille.RecupererCarteMilieu());
-        
-        CellGraphj1c1.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
-                        
-                        CarteChoisie(joueur1.ReferenceCarteDuJoueur()[0]);
+
+        //Action pour les quatre cartes
+        /*CellGraphj1c1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                CarteChoisie(joueur1.ReferenceCarteDuJoueur()[0]); //On garde en référence la carte que le joueur va jouer
+                message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
+            }
+        });
+
+        CellGraphj1c2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                CarteChoisie(joueur1.ReferenceCarteDuJoueur()[1]);
+                message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
+            }
+        });
+
+        CellGraphj2c1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                CarteChoisie(joueur2.ReferenceCarteDuJoueur()[0]);
+                message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
+            }
+        });
+
+        CellGraphj2c2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                CarteChoisie(joueur2.ReferenceCarteDuJoueur()[1]);
+                message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
+            }
+        });*/
+        carte1_jb.add(CellGraphj1c1);
+        carte2_jb.add(CellGraphj1c2);
+        carte1_jr.add(CellGraphj2c1);
+        carte2_jr.add(CellGraphj2c2);
+        carte_milieu.add(CellGraphcm);
+
+        // AFFICHAGE Plateau ********************************************************
+        for (int i = 4; i >= 0; i--) {
+            for (int j = 0; j < 5; j++) { //On parcours le plateau
+
+                int ii = i; //Problème de inner class
+                int jj = j;
+
+                Cellule_Graphique CellGraph = new Cellule_Graphique(grille.ReferencePions()[i][j]);
+                plateau.add(CellGraph);
+                
+                
+                // Si le joueur appuie sur une carte ************************************************
+
+                CellGraphj1c1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                        CarteChoisie(joueur1.ReferenceCarteDuJoueur()[0]); //On garde en référence la carte que le joueur va jouer
                         message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
                     }
-        });
-        
-        CellGraphj1c2.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
-                        
+                });
+
+                CellGraphj1c2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+
                         CarteChoisie(joueur1.ReferenceCarteDuJoueur()[1]);
                         message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
                     }
-        });
-        
-        CellGraphj2c1.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
-                        
+                });
+
+                CellGraphj2c1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+
                         CarteChoisie(joueur2.ReferenceCarteDuJoueur()[0]);
                         message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
                     }
-        });
-        
-        CellGraphj2c2.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {   
-                        
+                });
+
+                CellGraphj2c2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+
                         CarteChoisie(joueur2.ReferenceCarteDuJoueur()[1]);
                         message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
                     }
-        });
-        
-        
-                carte1_jb.add(CellGraphj1c1);
-                carte2_jb.add(CellGraphj1c2);
-                carte1_jr.add(CellGraphj2c1);
-                carte2_jr.add(CellGraphj2c2);
-                carte_milieu.add(CellGraphcm);
-        
+                });
+
+                //Action des boutons sur le plateau******************************************************
                 
-                
-                 
+                CellGraph.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                        
+
+                        boolean tour = JouerFenetre(ii, jj);
+                        if (tour == false) {
+                            return; //Le joueur n'a pas fini son tour
+                        } else {
+                            //Le tour s'est bien passé
+                            //On passe au prochain tour, on affiche les nouvelles modifications
+
+                            grille.JoueurSuivant();
+                            if (grille.JoueurCourant() == joueur1) {
+                                message.setText("c'est au tour du joueur bleu");
+                            } else {
+                                message.setText("c'est au tour du joueur rouge");
+                            }
+
+                        }
+
+                    }
+
+                });
             }
-            
-        
-    //METHODE RECUPERATION CARTE A JOUER ***********************************************
-    
-       
-     public void CarteChoisie(Carte cartejoueur){ //joueur1.ReferenceCarteDuJoueur()[0];
-         
-         
-         carteajouer = cartejoueur;
-         
-         
-     }     
-            
-    
-        
-        //METHODE - VERIFIER DE/VERS ********************************************************************************************************************************************
-        
-        
-        public boolean VerifierDeVers(int ligne, int colonne) { //On cherche à savoir si le joueur choisit son pion à déplacer où la case sur laquelle il veut déplacer son pion
-            
-            
-            Joueur jc = grille.JoueurCourant();
-            int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
-            
-            if (grille.ReferencePions(ligne,colonne).ReferenceCouleurPion() == couleurjoueur) { //S'il clique sur son pion,
-                
-                bouton1.initialiserLigne(ligne); //On récupère la référence de coordonnée de cette case
-                bouton1.initialiserColonne(colonne);
-                if (couleurjoueur == 1) {
-                   message.setText("le joueur rouge à choisi son pion à bouger");
-                } else {
-                   message.setText("le joueur bleu à choisi son pion à bouger");
-                }
-                
-                return true;
-                
-                
-            } else { //Sinon, rien ne se passe
-                
-                
-                return false;
-                
-            }
-            
+
         }
-          
-        
-        
-        //METHODE - JOUER ********************************************************************************************************************************************
-        
-        
-        
-            public boolean JouerFenetre(int ligne, int colonne) { //On joue un tour
-            
-            Carte cvariable = carteajouer;
-            
-            //Vérifier que le joueur n'a pas perdu tous ses pions ------------
-            AffichageCarte();   
-            
-            if (carteajouer == cvariable) return false;
-                
-            
-            Joueur jc = grille.JoueurCourant();
-            int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
-            
-            if (grille.NombrePionsCouleur(couleurjoueur)== 0) { //On compte son nombre de pions restant
-                
-                Joueur Jgagnant = grille.JoueurEnAttente();
-                
-                if (Jgagnant.ReferenceCouleurDuJoueur() == 1) { //On annonce le gagnant
-                   message.setText("Victoire du joueur Rouge ! Merci d'avoir joué"); //Pour le moment, ce sont des strings, mais nous modifierons cela lorsque nos images fonctionneront
-               } else {
-                   message.setText("Victoire du joueur Bleu ! Merci d'avoir joué");
-               }
-                
+
+    }
+
+    //METHODE POUR L'INTEFRACE *********************************************************************************************************************************
+
+    //METHODE RECUPERATION CARTE A JOUER ***********************************************
+    public void CarteChoisie(Carte cartejoueur) { //joueur1.ReferenceCarteDuJoueur()[0];
+
+        carteajouer = cartejoueur;
+
+    }
+
+    //METHODE - VERIFIER DE/VERS ********************************************************************************************************************************************
+    public boolean VerifierDeVers(int ligne, int colonne) { //On cherche à savoir si le joueur choisit son pion à déplacer où la case sur laquelle il veut déplacer son pion
+
+        Joueur jc = grille.JoueurCourant();
+        int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
+
+        if (grille.ReferencePions(ligne, colonne).ReferenceCouleurPion() == couleurjoueur) { //S'il clique sur son pion,
+
+            bouton1.MettreEnCommun(ligne, colonne); //On lui attribut ses coordonnées
+
+            if (couleurjoueur == 1) {
+                message.setText("le joueur rouge à choisi son pion à bouger");
+            } else {
+                message.setText("le joueur bleu à choisi son pion à bouger");
             }
-            
-            //Si cette étape est passée, on continue
-            
-            if (VerifierDeVers(ligne, colonne) == true) { //On vérifie que le bouton choisi est celui de départ ou d'arrivée, c'est-à-dire, s'il correspond au pion que le joueur souhaite déplacer ou 
-                //S'il correspond à la case où il souhaite avancer.
-                
-                return false; //Si c'est le pion, les valeurs de bouton1 ont été changées et prêtes à être utilisées au prochain bouton
-                
-                
-            } else if (VerifierDeVers(ligne, colonne) == false) { //Sinon, on stock la nouvelle coordonnee afin de déplacer le pion
-                
-                
-                Coordonnee Vers = new Coordonnee(ligne, colonne);
-                grille.jouer(bouton1, Vers); //On joue le pion
-                
-            
-             // On vérifie si le joueur est gagnant
-                
-            if(grille.VerifierGagnant() == true) { //Si oui, on récupère son nom
-                    
-               Joueur Jgagnant = grille.etreGagnant();
-               
-               if (Jgagnant.ReferenceCouleurDuJoueur() == 1) { //On annonce le vainqueur
-                   
-                   message.setText("Victoire du joueur Rouge ! Merci d'avoir joué");
-               } else {
-                   message.setText("Victoire du joueur Bleu ! Merci d'avoir joué");
-               }
-               
-           }
-                
+
+            return true;
+
+        } else { //Sinon, rien ne se passe
+
+            return false;
+
+        }
+
+    }
+
+    //METHODE - JOUER ********************************************************************************************************************************************
+    public boolean JouerFenetre(int ligne, int colonne) { //On joue un tour
+
+        carte1_jb.repaint();
+        carte2_jb.repaint();
+        carte1_jr.repaint();
+        carte2_jr.repaint();
+        carte_milieu.repaint();
+
+//Vérifier que le joueur n'a pas perdu tous ses pions **********************
+        Joueur jc = grille.JoueurCourant();
+        int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
+
+        if (grille.NombrePionsCouleur(couleurjoueur) == 0) { //On compte son nombre de pions restant
+
+            Joueur Jgagnant = grille.JoueurEnAttente();
+
+            if (Jgagnant.ReferenceCouleurDuJoueur() == 1) { //On annonce le gagnant
+                message.setText("Victoire du joueur Rouge ! Merci d'avoir joué"); //Pour le moment, ce sont des strings, mais nous modifierons cela lorsque nos images fonctionneront
+            } else {
+                message.setText("Victoire du joueur Bleu ! Merci d'avoir joué");
+            }
+
+        }
+
+        //Si cette étape est passée, on continue
+        if (VerifierDeVers(ligne, colonne) == true) { //On vérifie que le bouton choisi est celui de départ ou d'arrivée, c'est-à-dire, s'il correspond au pion que le joueur souhaite déplacer ou 
+            //S'il correspond à la case où il souhaite avancer.
+
+            return false; //Si c'est le pion, les valeurs de bouton1 ont été changées et prêtes à être utilisées au prochain bouton
+
+        } else if (VerifierDeVers(ligne, colonne) == false) { //Sinon, on stock la nouvelle coordonnee afin de déplacer le pion
+
+            Coordonnee Vers = new Coordonnee(ligne, colonne);
+            grille.jouer(bouton1, Vers); //On joue le pion
+
+            // On vérifie si le joueur est gagnant
+            if (grille.VerifierGagnant() == true) { //Si oui, on récupère son nom
+
+                Joueur Jgagnant = grille.etreGagnant();
+
+                if (Jgagnant.ReferenceCouleurDuJoueur() == 1) { //On annonce le vainqueur
+
+                    message.setText("Victoire du joueur Rouge ! Merci d'avoir joué");
+                } else {
+                    message.setText("Victoire du joueur Bleu ! Merci d'avoir joué");
+                }
+
+            }
+
             //Sinon, on passe au tour suivant, et on actualise le plateau
-            
             Carte carteechanger = grille.echangerCarte(carteajouer); //On échange les références des cartes au milieu
             grille.echangerCarteMilieu(carteechanger); //On donne la nouvelle carte à la liste du joueur
 
             plateau.repaint();
-            AffichageCarte();
-            
-            }
-            
-            return true;
-            } 
-        
-        
-        
-       
-        
-        
-        
+            carte1_jb.repaint();
+            carte2_jb.repaint();
+            carte1_jr.repaint();
+            carte2_jr.repaint();
+            carte_milieu.repaint();
+
+        }
+
+        return true;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -438,9 +422,8 @@ public class fenetredejeu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bouton_demarrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_demarrerActionPerformed
-        
+
         //Affichage d'ambiance
-        
         carte1_jr.setVisible(true);
         panneau_message.setVisible(true);
         carte2_jr.setVisible(true);
@@ -450,13 +433,13 @@ public class fenetredejeu extends javax.swing.JFrame {
         plateau.setVisible(true);
         demarrer.setVisible(false);
         bouton_demarrer.setEnabled(false);
-        
+
         labeljb1.setVisible(true);
         labeljb2.setVisible(true);
         labelcm.setVisible(true);
         labeljr1.setVisible(true);
         labeljr2.setVisible(true);
-        
+
         message.setText("Le joueur bleu commence ! Bonne chance");
     }//GEN-LAST:event_bouton_demarrerActionPerformed
 
@@ -494,8 +477,7 @@ public class fenetredejeu extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bouton_demarrer;

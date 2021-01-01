@@ -68,9 +68,7 @@ public class Coordonnee {
         
         
 	public void initialiserLigne(int n) { //On intialise la ligne
-		if(n < 0 || n >= 5) {
-                    System.out.println("La ligne est hors du tableau");
-                }
+		
 		ligne = n;
 	}
 
@@ -78,11 +76,9 @@ public class Coordonnee {
         //METHODE 7 ------------------------------------------------------------------------------------------------------
         
         
-	public void initialiserColonne(int n){ //On initialise la colonne
-		if(n < 0 || n >= 5) {
-                    System.out.println("La colonne est hors du tableau");
-                }
-		colonne = n;
+	public void initialiserColonne(int c){ //On initialise la colonne
+		
+		colonne = c;
 	}
 
         
