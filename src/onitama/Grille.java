@@ -17,7 +17,7 @@ public class Grille {
 	public static final int rouge  = 1; //Attribution des nombres essentiels aux calculs
 	public static final int bleu = -1;
 
-	private Pions pionsEnJeu [][] = new Pions[5][5]; //On crée les pions
+	private Pions pionsEnJeu [][] = new Pions[5][5]; //On crée les pions et le plateau (pion = null quand la case est vide)
         
 
 	private boolean PresenceRoiBleu = true; 
@@ -172,7 +172,13 @@ public class Grille {
         
         
 	public Pions ReferencePions2(Coordonnee position) { //On récupère la position du pion
-		return ReferencePions(position.ReferenceLigne(),position.ReferenceColonne());
+
+            if (position == null) {
+            return null;
+            
+        } else {
+            return ReferencePions(position.ReferenceLigne(),position.ReferenceColonne());
+                }
 	}
 
         
@@ -233,7 +239,7 @@ public class Grille {
 				PresenceRoiRouge = false; 
 // ------------------------------------------------------------------------------------------------------------------------
 
-		pionsEnJeu[vers.ReferenceColonne()][vers.ReferenceLigne()] = new Pions(ReferencePions2(de)); //On déplace le pion à ses nouvelles coordonnées
+		//pionsEnJeu[vers.ReferenceColonne()][vers.ReferenceLigne()] = new Pions(ReferencePions2(de)); //On déplace le pion à ses nouvelles coordonnées
                 
 		ReferencePions(vers.ReferenceLigne(),vers.ReferenceColonne()).InitialiserCoordonnee(vers); //On lui attribut ses nouvelles coordonnées
                 

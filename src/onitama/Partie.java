@@ -14,7 +14,7 @@ public class Partie {
     
     // Attributs
     
-    private static Partie jeu;
+        private static Partie jeu;
 
 
 	private Joueur joueur1, joueur2;

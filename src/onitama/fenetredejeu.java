@@ -15,12 +15,11 @@ package onitama;
  */
 public class fenetredejeu extends javax.swing.JFrame {
 
-    //private static Partie jeu;
+    
     private Joueur joueur1, joueur2;
 
     private Grille grille;
 
-    //private static int NombreJoueur = 2;
     private Coordonnee bouton1;
 
     private Carte carteajouer = null;
@@ -75,38 +74,7 @@ public class fenetredejeu extends javax.swing.JFrame {
         Cellule_Graphique CellGraphj2c2 = new Cellule_Graphique(joueur2.ReferenceCarteDuJoueur()[1]);
         Cellule_Graphique CellGraphcm = new Cellule_Graphique(grille.RecupererCarteMilieu());
 
-        //Action pour les quatre cartes
-        /*CellGraphj1c1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                CarteChoisie(joueur1.ReferenceCarteDuJoueur()[0]); //On garde en référence la carte que le joueur va jouer
-                message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
-            }
-        });
-
-        CellGraphj1c2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                CarteChoisie(joueur1.ReferenceCarteDuJoueur()[1]);
-                message.setText("le joueur bleu à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
-            }
-        });
-
-        CellGraphj2c1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                CarteChoisie(joueur2.ReferenceCarteDuJoueur()[0]);
-                message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
-            }
-        });
-
-        CellGraphj2c2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                CarteChoisie(joueur2.ReferenceCarteDuJoueur()[1]);
-                message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
-            }
-        });*/
+        
         carte1_jb.add(CellGraphj1c1);
         carte2_jb.add(CellGraphj1c2);
         carte1_jr.add(CellGraphj2c1);
@@ -127,6 +95,8 @@ public class fenetredejeu extends javax.swing.JFrame {
                 // Si le joueur appuie sur une carte ************************************************
 
                 CellGraphj1c1.addActionListener(new java.awt.event.ActionListener() {
+                    
+                    
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                         CarteChoisie(joueur1.ReferenceCarteDuJoueur()[0]); //On garde en référence la carte que le joueur va jouer
@@ -135,6 +105,7 @@ public class fenetredejeu extends javax.swing.JFrame {
                 });
 
                 CellGraphj1c2.addActionListener(new java.awt.event.ActionListener() {
+                    
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                         CarteChoisie(joueur1.ReferenceCarteDuJoueur()[1]);
@@ -143,24 +114,27 @@ public class fenetredejeu extends javax.swing.JFrame {
                 });
 
                 CellGraphj2c1.addActionListener(new java.awt.event.ActionListener() {
+                    
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                         CarteChoisie(joueur2.ReferenceCarteDuJoueur()[0]);
-                        message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[0].prendreNom());
+                        message.setText("le joueur rouge à choisi de jouer la carte " + joueur2.ReferenceCarteDuJoueur()[0].prendreNom());
                     }
                 });
 
                 CellGraphj2c2.addActionListener(new java.awt.event.ActionListener() {
+                    
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                         CarteChoisie(joueur2.ReferenceCarteDuJoueur()[1]);
-                        message.setText("le joueur rouge à choisi de jouer la carte " + joueur1.ReferenceCarteDuJoueur()[1].prendreNom());
+                        message.setText("le joueur rouge à choisi de jouer la carte " + joueur2.ReferenceCarteDuJoueur()[1].prendreNom());
                     }
                 });
 
                 //Action des boutons sur le plateau******************************************************
                 
                 CellGraph.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                         
@@ -204,8 +178,10 @@ public class fenetredejeu extends javax.swing.JFrame {
 
         Joueur jc = grille.JoueurCourant();
         int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
-
-        if (grille.ReferencePions(ligne, colonne).ReferenceCouleurPion() == couleurjoueur) { //S'il clique sur son pion,
+        
+        if (grille.ReferencePions(ligne, colonne) == null) {
+            return false;
+        } else if (grille.ReferencePions(ligne, colonne).ReferenceCouleurPion() == couleurjoueur) { //S'il clique sur son pion,
 
             bouton1.MettreEnCommun(ligne, colonne); //On lui attribut ses coordonnées
 
@@ -234,7 +210,8 @@ public class fenetredejeu extends javax.swing.JFrame {
         carte2_jr.repaint();
         carte_milieu.repaint();
 
-//Vérifier que le joueur n'a pas perdu tous ses pions **********************
+    //Vérifier que le joueur n'a pas perdu tous ses pions **********************
+    
         Joueur jc = grille.JoueurCourant();
         int couleurjoueur = jc.ReferenceCouleurDuJoueur(); //On récupère la couleur du joueur courant
 
@@ -251,6 +228,8 @@ public class fenetredejeu extends javax.swing.JFrame {
         }
 
         //Si cette étape est passée, on continue
+        
+        
         if (VerifierDeVers(ligne, colonne) == true) { //On vérifie que le bouton choisi est celui de départ ou d'arrivée, c'est-à-dire, s'il correspond au pion que le joueur souhaite déplacer ou 
             //S'il correspond à la case où il souhaite avancer.
 
@@ -262,6 +241,7 @@ public class fenetredejeu extends javax.swing.JFrame {
             grille.jouer(bouton1, Vers); //On joue le pion
 
             // On vérifie si le joueur est gagnant
+            
             if (grille.VerifierGagnant() == true) { //Si oui, on récupère son nom
 
                 Joueur Jgagnant = grille.etreGagnant();
@@ -276,6 +256,7 @@ public class fenetredejeu extends javax.swing.JFrame {
             }
 
             //Sinon, on passe au tour suivant, et on actualise le plateau
+            
             Carte carteechanger = grille.echangerCarte(carteajouer); //On échange les références des cartes au milieu
             grille.echangerCarteMilieu(carteechanger); //On donne la nouvelle carte à la liste du joueur
 
