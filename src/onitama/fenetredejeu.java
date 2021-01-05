@@ -343,6 +343,11 @@ public class fenetredejeu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         bouton_demarrer = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         panneau_message = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         message = new javax.swing.JTextArea();
@@ -385,23 +390,23 @@ public class fenetredejeu extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Lorsque vous êtes prêts, cliquer sur démarrer partie");
-        demarrer.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 500, 80));
+        jLabel1.setText("votre pion");
+        demarrer.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 110, 50));
 
         jLabel2.setFont(new java.awt.Font("Tempus Sans ITC", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("~Vous allez jouer à Onitama~ ");
-        demarrer.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 490, 80));
+        demarrer.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 490, 80));
 
         jLabel3.setFont(new java.awt.Font("Tempus Sans ITC", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Vous pouvez choisir votre couleur");
-        demarrer.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 530, 80));
+        demarrer.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 530, 80));
 
         jLabel4.setFont(new java.awt.Font("Tempus Sans ITC", 0, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Le joueur bleu commence");
-        demarrer.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 500, 80));
+        jLabel4.setText("Règles ");
+        demarrer.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 500, 80));
 
         bouton_demarrer.setFont(new java.awt.Font("Tempus Sans ITC", 0, 48)); // NOI18N
         bouton_demarrer.setText("Démarrer Partie");
@@ -410,9 +415,34 @@ public class fenetredejeu extends javax.swing.JFrame {
                 bouton_demarrerActionPerformed(evt);
             }
         });
-        demarrer.add(bouton_demarrer, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, -1, -1));
+        demarrer.add(bouton_demarrer, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 560, -1, -1));
 
-        getContentPane().add(demarrer, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 600, 600));
+        jLabel5.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Lorsque vous êtes prêts, cliquer sur démarrer partie");
+        demarrer.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 500, 80));
+
+        jLabel6.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("1) Sélectionnez la carte que vous souhaitez jouer");
+        demarrer.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 510, 80));
+
+        jLabel7.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("2) Sélectionnez le pion de votre choix, ");
+        demarrer.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 500, 80));
+
+        jLabel8.setFont(new java.awt.Font("Tempus Sans ITC", 0, 36)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Le joueur bleu commence");
+        demarrer.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 500, 80));
+
+        jLabel9.setFont(new java.awt.Font("Tempus Sans ITC", 0, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("3) Sélectionnez la case où vous souhaitez déplacer ");
+        demarrer.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 540, 80));
+
+        getContentPane().add(demarrer, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 610, 650));
 
         panneau_message.setBackground(new java.awt.Color(255, 204, 153));
         panneau_message.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -522,6 +552,11 @@ public class fenetredejeu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelcm;
     private javax.swing.JLabel labeljb1;
