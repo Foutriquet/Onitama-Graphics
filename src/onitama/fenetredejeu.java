@@ -13,6 +13,56 @@ package onitama;
  *
  *
  */
+
+
+//IMPORTANT - INFORMATION ***********************************************************************************************************************************************************
+
+/*
+
+Bonjour monsieur. Ce message est pour expliquer les problèmes que nous avons rencontrés et qui n'ont pas pu être réglés dans les temps.  
+En effet, nous en sommes arrivés à de nombreuses heures de travail sur l'interface graphique, avec, en tête, le code exacte pour faire fonctionner notre jeu.
+Cependant, nous avons découvert assez tardivement une erreur sur laquelle tout notre jeu repose, et il est donc impossible pour nous de finir l'interface graphique,
+car cela nous demanderai de revoir toutes les classes, d'en supprimer deux et d'en ajouter une, sans garanti que tout le travail effectué sur l'interface jusqu'à présent 
+continue de fonctionner. 
+
+Par conséquent, nous avons tout de même écrit tout le code que nous devions écrire à la base, même si l'erreur qui nous bloque ne permet pas à un utilisateur de réellement jouer dans l'état actuel.
+
+Actuellement, le code interface permet :
+
+- de créer la carte, les joueurs, leur pions, les placer
+- d'afficher le plateau et les cartes de chaque début de partie
+- de cliquer sur les cartes que l'on souhaite jouer
+
+Il a été travaillé plus en profondeur que le puissance 4 concernant le design et l'interaction utilisateur/machine.
+
+Ce qui a été codé mais ne peut pas être réalisé suite à l'erreur source :
+
+- Vérification que le joueur clique sur son pion en premier, puis sur une case ou un pion adverse en deuxième
+- Vérification des possibles victoires (plus de pion, roi sur temple, pion sur roi, etc) des joueurs
+- Passage au joueur suivant et rafraîchissement des cartes et du plateau  après chaque tour
+- Mise en mémoire de la carte choisie par le joueur, et échange de la carte avec celle du milieu une fois le tour fini
+
+
+Enfin, petite explication de l'erreur source : 
+
+Notre erreur vient du fait que nous avons créé un plateau fait de pions, qui eux ont des coordonnées. S'il n'y a pas de pion, il n'y a pas de coordonnée.
+Or, à cause de cela, lorsque l'on souhaite vérifier la présence d'un pion, nous nous retrouvons avec une cascade de message d'erreur concernant des coordonnée qui sont "null"
+Donc, c'est comme si notre plateau est inexistant, chose que nous n'avions pas prévu, ou même imaginé. 
+
+Pour y remédier, nous devrions changer tout le plateau, supprimant Coordoonnée et pion, en formant, comme au puissance 4, une classe Cellule, regroupant les deux classes. 
+Cela impliquerai un gros changement de méthodes, et notre interface graphique ne fonctionnerait problablement plus, du moins, si nous devons rendre notre porjet dans les temps. 
+
+Nous sommes conscients de notre erreur, et si nous avons fait deux classes, au départ, c'était bien pour classer plus distinctement toutes les données du jeu. 
+Cela nous paraissait plus rigoureux et efficace. Mais nous avons fait une erreur, et plus de temps nous aurait permis d'y remédier certainement. 
+En espérant que vous comprenez notre problème. 
+
+
+Nous rendrons donc, dans les délais fixés par vos soins, notre travail inachevé suite à notre erreur source. 
+Nous essayerons, tout de même, de régler le souci pour la date du 16 si nous parvenons à finir le code et nous vous le renverrons. 
+
+*/
+
+
 public class fenetredejeu extends javax.swing.JFrame {
 
     
